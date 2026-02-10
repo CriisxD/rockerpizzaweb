@@ -4,10 +4,10 @@ import logo from '../assets/logo_rocker_v3.png';
 
 interface NavbarProps {
   cartCount: number;
-  openCart: () => void;
+  toggleCart: () => void;
 }
 
-export const Navbar: React.FC<NavbarProps> = ({ cartCount, openCart }) => {
+export const Navbar: React.FC<NavbarProps> = ({ cartCount, toggleCart }) => {
   return (
     <>
     <nav className="fixed top-0 left-0 right-0 z-50 bg-black/95 backdrop-blur-md border-b border-white/10 h-[90px] flex items-center justify-between px-4 transition-all duration-300">
@@ -22,7 +22,7 @@ export const Navbar: React.FC<NavbarProps> = ({ cartCount, openCart }) => {
             <Instagram size={20} />
         </a>
         <button 
-          onClick={openCart}
+          onClick={toggleCart}
           className="relative w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-brand-yellow hover:text-brand-dark transition-colors"
         >
           <ShoppingCart size={20} className="text-white" />
