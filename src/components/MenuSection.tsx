@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { products } from '../data/products';
 import { Star, Plus, Check, X, Search } from 'lucide-react';
 import type { Product } from '../types';
@@ -17,7 +17,14 @@ export const MenuSection: React.FC<{ addToCart: (p: Product) => void }> = ({ add
   const [isMobile, setIsMobile] = useState(false);
 
   const dragControls = useDragControls();
+  const isFirstRender = useRef(true);
+
   useEffect(() => {
+    if (isFirstRender.current) {
+      isFirstRender.current = false;
+      return;
+    }
+
     const menuSection = document.getElementById('menu');
     if (menuSection) {
       // Offset for fixed navbar (approx 80-100px)
