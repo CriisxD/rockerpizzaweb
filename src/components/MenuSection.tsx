@@ -298,7 +298,11 @@ export const MenuSection: React.FC<{ addToCart: (p: Product) => void }> = ({ add
                             disabled={!allPizzasSelected}
                             className="bg-[#2a3040] hover:bg-[#343b4d] text-white font-bold py-3 px-8 rounded-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed border border-white/10 shadow-lg"
                         >
-                            {(selectedProduct.pizzaCount || 1) > 1 ? 'Completa todas las pizzas' : 'Agregar al pedido'}
+                            {allPizzasSelected 
+                                ? 'Agregar al pedido' 
+                                : (selectedProduct.pizzaCount || 1) > 1 
+                                    ? 'Completa todas las pizzas' 
+                                    : 'Agregar al pedido'}
                         </button>
                      </div>
                  </div>
