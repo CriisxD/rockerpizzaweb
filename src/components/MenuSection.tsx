@@ -199,7 +199,11 @@ export const MenuSection: React.FC<{ addToCart: (p: Product) => void }> = ({ add
                      <div className="flex justify-between items-start mb-4 md:mb-6 shrink-0">
                         <div>
                             <h4 className="text-white font-heading text-xl uppercase mb-1">PERSONALIZA TU PEDIDO</h4>
-                            <p className="text-gray-400 text-sm">Configura tus {selectedProduct.pizzaCount} pizzas</p>
+                            <p className="text-gray-400 text-sm">
+                              {(selectedProduct.pizzaCount || 1) > 1 
+                                ? `Configura tus ${selectedProduct.pizzaCount} pizzas`
+                                : 'Configura tu pizza'}
+                            </p>
                         </div>
                         <button 
                             onClick={() => setIsModalOpen(false)} 
@@ -294,7 +298,7 @@ export const MenuSection: React.FC<{ addToCart: (p: Product) => void }> = ({ add
                             disabled={!allPizzasSelected}
                             className="bg-[#2a3040] hover:bg-[#343b4d] text-white font-bold py-3 px-8 rounded-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed border border-white/10 shadow-lg"
                         >
-                            Completa todas las pizzas
+                            {(selectedProduct.pizzaCount || 1) > 1 ? 'Completa todas las pizzas' : 'Agregar al pedido'}
                         </button>
                      </div>
                  </div>
