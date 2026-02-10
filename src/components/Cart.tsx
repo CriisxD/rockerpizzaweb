@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useDragControls } from 'framer-motion';
 import { X, Plus, Minus, Send, Trash2 } from 'lucide-react';
 import type { CartItem } from '../types';
 
@@ -25,6 +25,8 @@ export const Cart: React.FC<CartProps> = ({
     notes: ''
   });
 
+
+  const dragControls = useDragControls();
   const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
@@ -82,6 +84,8 @@ export const Cart: React.FC<CartProps> = ({
           
           <motion.div
             drag={isMobile ? "y" : false}
+            dragListener={false}
+            dragControls={dragControls}
             dragConstraints={{ top: 0 }}
             dragElastic={{ top: 0, bottom: 0.2 }}
             onDragEnd={(_, { offset, velocity }) => {
@@ -101,7 +105,10 @@ export const Cart: React.FC<CartProps> = ({
           >
              {/* Mobile Drag Handle */}
              {isMobile && (
-               <div className="w-full h-6 shrink-0 flex items-center justify-center bg-transparent pointer-events-none mt-2">
+               <div 
+                 className="w-full h-10 shrink-0 flex items-center justify-center bg-transparent touch-none cursor-grab active:cursor-grabbing mt-2"
+                 onPointerDown={(e) => dragControls.start(e)}
+               >
                  <div className="w-12 h-1.5 bg-white/20 rounded-full" />
                </div>
              )}

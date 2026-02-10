@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { products } from '../data/products';
 import { Star, Plus, Check, X, Search } from 'lucide-react';
 import type { Product } from '../types';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, useDragControls } from 'framer-motion';
 import defaultPizzaImage from '../assets/pizza_product_v2.jpg';
 
 const categories = [
@@ -15,6 +15,7 @@ export const MenuSection: React.FC<{ addToCart: (p: Product) => void }> = ({ add
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(false);
+  const dragControls = useDragControls();
 
   useEffect(() => {
     const checkMobile = () => setIsMobile(window.innerWidth < 768);
@@ -142,6 +143,8 @@ export const MenuSection: React.FC<{ addToCart: (p: Product) => void }> = ({ add
           >
             <motion.div 
               drag={isMobile ? "y" : false}
+              dragListener={false}
+              dragControls={dragControls}
               dragConstraints={{ top: 0 }}
               dragElastic={{ top: 0, bottom: 0.2 }}
               onDragEnd={(_, { offset, velocity }) => {
@@ -158,7 +161,10 @@ export const MenuSection: React.FC<{ addToCart: (p: Product) => void }> = ({ add
             >
                  {/* Mobile Drag Handle */}
                  {isMobile && (
-                   <div className="w-full h-6 absolute top-0 left-0 z-30 flex items-center justify-center bg-gradient-to-b from-black/50 to-transparent pointer-events-none">
+                   <div 
+                     className="w-full h-10 absolute top-0 left-0 z-30 flex items-center justify-center bg-gradient-to-b from-black/50 to-transparent touch-none cursor-grab active:cursor-grabbing"
+                     onPointerDown={(e) => dragControls.start(e)}
+                   >
                      <div className="w-12 h-1.5 bg-white/30 rounded-full" />
                    </div>
                  )}
