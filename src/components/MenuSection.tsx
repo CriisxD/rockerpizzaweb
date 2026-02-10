@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { products } from '../data/products';
 import { Star, Plus, Check, X, Search } from 'lucide-react';
 import type { Product } from '../types';
@@ -17,15 +17,17 @@ export const MenuSection: React.FC<{ addToCart: (p: Product) => void }> = ({ add
   const [isMobile, setIsMobile] = useState(false);
 
   const dragControls = useDragControls();
-  const categoryContainerRef = useRef<HTMLDivElement>(null);
-
   useEffect(() => {
-    if (categoryContainerRef.current) {
-      const yOffset = -180; // Offset for sticky header + navbar
-      const element = categoryContainerRef.current;
-      const y = element.getBoundingClientRect().top + window.scrollY + yOffset;
+    const menuSection = document.getElementById('menu');
+    if (menuSection) {
+      // Offset for fixed navbar (approx 80-100px)
+      const navbarHeight = 100;
+      const targetPosition = menuSection.offsetTop - navbarHeight;
       
-      window.scrollTo({ top: y, behavior: 'smooth' });
+      window.scrollTo({
+        top: Math.max(0, targetPosition),
+        behavior: 'smooth'
+      });
     }
   }, [activeCategory]);
 
@@ -121,7 +123,6 @@ export const MenuSection: React.FC<{ addToCart: (p: Product) => void }> = ({ add
 
         {/* Category Filter */}
         <div 
-          ref={categoryContainerRef}
           className="flex flex-wrap justify-center gap-4 mb-16 sticky top-[90px] z-40 py-4 bg-brand-dark/95 backdrop-blur-md"
         >
           {categories.map((category) => (
