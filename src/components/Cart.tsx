@@ -36,6 +36,18 @@ export const Cart: React.FC<CartProps> = ({
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
 
+  // Lock body scroll when cart is open
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isOpen]);
+
   const total = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
 
   const handleWhatsAppCheckout = () => {

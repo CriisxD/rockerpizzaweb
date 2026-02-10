@@ -23,6 +23,18 @@ export const MenuSection: React.FC<{ addToCart: (p: Product) => void }> = ({ add
     window.addEventListener('resize', checkMobile);
     return () => window.removeEventListener('resize', checkMobile);
   }, []);
+
+  // Lock body scroll when modal is open
+  useEffect(() => {
+    if (isModalOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isModalOpen]);
   
   // State for multi-pizza selection
   const [currentPizzaIndex, setCurrentPizzaIndex] = useState(0);
