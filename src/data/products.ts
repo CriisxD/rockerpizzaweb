@@ -1,4 +1,6 @@
 import type { Product } from '../types';
+import pizzaImage from '../assets/pizza_product_v2.jpg';
+import beverageImage from '../assets/beverage.jpg';
 
 const ROCKER_INGREDIENTS = [
     'Salame',
@@ -27,7 +29,7 @@ export const products: Product[] = [
     description: 'Arma tu Rocker con hasta 3 ingredientes a elección.',
     price: 9990,
     category: 'Promos',
-    image: '/src/assets/pizza_product_v2.jpg',
+    image: pizzaImage,
     popular: true,
     pizzaCount: 1,
     maxIngredients: 3,
@@ -40,7 +42,7 @@ export const products: Product[] = [
     description: 'Arma tu Rocker con hasta 5 ingredientes a elección.',
     price: 11990,
     category: 'Promos',
-    image: '/src/assets/pizza_product_v2.jpg',
+    image: pizzaImage,
     pizzaCount: 1,
     maxIngredients: 5,
     pizzaBundles: [],
@@ -52,7 +54,7 @@ export const products: Product[] = [
     description: '2 Pizzas Familiares con 3 ingredientes cada una.',
     price: 17990,
     category: 'Promos',
-    image: '/src/assets/pizza_product_v2.jpg',
+    image: pizzaImage,
     popular: true,
     pizzaCount: 2,
     maxIngredients: 3,
@@ -65,7 +67,7 @@ export const products: Product[] = [
     description: '3 Pizzas Familiares con 3 ingredientes cada una.',
     price: 25990,
     category: 'Promos',
-    image: '/src/assets/pizza_product_v2.jpg',
+    image: pizzaImage,
     popular: true,
     pizzaCount: 3,
     maxIngredients: 3,
@@ -80,7 +82,7 @@ export const products: Product[] = [
     description: 'Coca-Cola, Fanta, Sprite',
     price: 2500,
     category: 'Bebidas',
-    image: '/src/assets/beverage.jpg'
+    image: beverageImage
   },
   {
     id: 'bebida-lata',
@@ -88,6 +90,6 @@ export const products: Product[] = [
     description: 'Coca-Cola, Fanta, Sprite',
     price: 1500,
     category: 'Bebidas',
-    image: '/src/assets/beverage.jpg'
+    image: beverageImage
   }
 ];

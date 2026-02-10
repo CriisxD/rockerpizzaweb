@@ -3,6 +3,7 @@ import { products } from '../data/products';
 import { Star, Plus, Check, X, Search } from 'lucide-react';
 import type { Product } from '../types';
 import { motion, AnimatePresence } from 'framer-motion';
+import defaultPizzaImage from '../assets/pizza_product_v2.jpg';
 
 const categories = [
   { id: 'Promos', label: 'Rocker Promos' },
@@ -141,7 +142,7 @@ export const MenuSection: React.FC<{ addToCart: (p: Product) => void }> = ({ add
                  {/* Product Image Side */}
                  <div className="md:w-5/12 relative bg-neutral-900 h-48 md:h-auto">
                     <img 
-                        src={selectedProduct.image || "/src/assets/pizza_product_v2.jpg"} 
+                        src={selectedProduct.image || defaultPizzaImage} 
                         alt={selectedProduct.name} 
                         className="w-full h-full object-cover opacity-80"
                     />
@@ -268,7 +269,7 @@ const ProductCard = ({ product, onClick }: { product: Product; onClick: () => vo
   <div className="bg-brand-card rounded-2xl overflow-hidden border border-white/5 hover:border-brand-yellow/30 transition-all duration-300 group hover:-translate-y-2 hover:shadow-[0_10px_30px_rgba(0,0,0,0.5)] flex flex-col h-full">
     <div className="relative h-48 overflow-hidden bg-white/5">
         <img 
-            src={product.image || "/src/assets/pizza_product_v2.jpg"} 
+            src={product.image || defaultPizzaImage} 
             alt={product.name} 
             className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
         />
