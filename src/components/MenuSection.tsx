@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { products } from '../data/products';
 import { Star, Plus, Check, X, Search } from 'lucide-react';
 import type { Product } from '../types';
@@ -14,6 +14,14 @@ export const MenuSection: React.FC<{ addToCart: (p: Product) => void }> = ({ add
   const [activeCategory, setActiveCategory] = useState<string>('Promos');
   const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
   
   // State for multi-pizza selection
   const [currentPizzaIndex, setCurrentPizzaIndex] = useState(0);
@@ -129,33 +137,34 @@ export const MenuSection: React.FC<{ addToCart: (p: Product) => void }> = ({ add
             initial={{ opacity: 0 }} 
             animate={{ opacity: 1 }} 
             exit={{ opacity: 0 }} 
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-sm"
+            className="fixed inset-0 z-50 flex items-end md:items-center justify-center sm:p-4 bg-black/90 backdrop-blur-sm"
             onClick={() => setIsModalOpen(false)}
           >
             <motion.div 
-              initial={{ scale: 0.95, opacity: 0 }} 
-              animate={{ scale: 1, opacity: 1 }} 
-              exit={{ scale: 0.95, opacity: 0 }} 
-              className="bg-brand-card w-full max-w-4xl rounded-3xl border border-white/10 overflow-hidden shadow-2xl flex flex-col md:flex-row h-[600px]"
+              initial={isMobile ? { y: "100%" } : { scale: 0.95, opacity: 0 }} 
+              animate={isMobile ? { y: 0 } : { scale: 1, opacity: 1 }} 
+              exit={isMobile ? { y: "100%" } : { scale: 0.95, opacity: 0 }} 
+              transition={{ type: "spring", damping: 25, stiffness: 300 }}
+              className="bg-brand-card w-full max-w-4xl rounded-t-3xl md:rounded-3xl border border-white/10 overflow-hidden shadow-2xl flex flex-col md:flex-row h-[85vh] md:h-[600px]"
               onClick={e => e.stopPropagation()}
             >
                  {/* Product Image Side */}
-                 <div className="md:w-5/12 relative bg-neutral-900 h-48 md:h-auto">
+                 <div className="md:w-5/12 relative bg-neutral-900 h-32 md:h-auto shrink-0">
                     <img 
                         src={selectedProduct.image || defaultPizzaImage} 
                         alt={selectedProduct.name} 
                         className="w-full h-full object-cover opacity-80"
                     />
                     <div className="absolute inset-0 bg-gradient-to-t from-brand-card via-transparent to-transparent md:bg-gradient-to-r" />
-                    <div className="absolute bottom-6 left-6 z-10">
-                        <h3 className="text-3xl font-heading text-white mb-1 uppercase italic tracking-wider">{selectedProduct.name}</h3>
-                        <p className="text-brand-red font-bold text-xl">${selectedProduct.price.toLocaleString('es-CL')}</p>
+                    <div className="absolute bottom-4 left-6 z-10">
+                        <h3 className="text-2xl md:text-3xl font-heading text-white mb-1 uppercase italic tracking-wider">{selectedProduct.name}</h3>
+                        <p className="text-brand-red font-bold text-lg md:text-xl">${selectedProduct.price.toLocaleString('es-CL')}</p>
                     </div>
                  </div>
 
                  {/* Config Side */}
-                 <div className="md:w-7/12 p-6 md:p-8 flex flex-col bg-[#1a1a1a]">
-                     <div className="flex justify-between items-start mb-6">
+                 <div className="md:w-7/12 p-4 md:p-8 flex flex-col bg-[#1a1a1a] flex-grow overflow-hidden">
+                     <div className="flex justify-between items-start mb-4 md:mb-6 shrink-0">
                         <div>
                             <h4 className="text-white font-heading text-xl uppercase mb-1">PERSONALIZA TU PEDIDO</h4>
                             <p className="text-gray-400 text-sm">Configura tus {selectedProduct.pizzaCount} pizzas</p>
