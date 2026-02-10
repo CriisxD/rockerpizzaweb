@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Plus, Minus, Send, Trash2 } from 'lucide-react';
 import type { CartItem } from '../types';
@@ -24,6 +24,15 @@ export const Cart: React.FC<CartProps> = ({
     paymentMethod: 'Efectivo',
     notes: ''
   });
+
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   const total = cartItems.reduce((sum, item) => sum + (item.price * item.quantity), 0);
 
@@ -72,12 +81,30 @@ export const Cart: React.FC<CartProps> = ({
           />
           
           <motion.div
-            initial={{ x: '100%' }}
-            animate={{ x: 0 }}
-            exit={{ x: '100%' }}
+            drag={isMobile ? "y" : false}
+            dragConstraints={{ top: 0 }}
+            dragElastic={{ top: 0, bottom: 0.2 }}
+            onDragEnd={(_, { offset, velocity }) => {
+              if (offset.y > 100 || velocity.y > 500) {
+                onClose();
+              }
+            }}
+            initial={isMobile ? { y: '100%' } : { x: '100%' }}
+            animate={isMobile ? { y: 0 } : { x: 0 }}
+            exit={isMobile ? { y: '100%' } : { x: '100%' }}
             transition={{ type: 'spring', damping: 25, stiffness: 200 }}
-            className="fixed right-0 top-0 h-full w-full max-w-[400px] bg-[#111] border-l border-white/10 z-[101] shadow-2xl flex flex-col"
+            className={`fixed z-[101] bg-[#111] border-white/10 shadow-2xl flex flex-col
+              ${isMobile 
+                ? 'bottom-0 left-0 right-0 h-[85vh] rounded-t-3xl border-t' 
+                : 'right-0 top-0 h-full w-full max-w-[400px] border-l'
+              }`}
           >
+             {/* Mobile Drag Handle */}
+             {isMobile && (
+               <div className="w-full h-6 shrink-0 flex items-center justify-center bg-transparent pointer-events-none mt-2">
+                 <div className="w-12 h-1.5 bg-white/20 rounded-full" />
+               </div>
+             )}
             <div className="p-6 border-b border-white/5 flex justify-between items-center bg-[#161616]">
               <h2 className="text-xl font-heading tracking-wide">TU PEDIDO</h2>
               <button onClick={onClose} className="p-2 hover:bg-white/10 rounded-full text-gray-400 hover:text-white transition-colors">

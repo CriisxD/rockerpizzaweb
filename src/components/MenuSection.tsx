@@ -141,13 +141,27 @@ export const MenuSection: React.FC<{ addToCart: (p: Product) => void }> = ({ add
             onClick={() => setIsModalOpen(false)}
           >
             <motion.div 
+              drag={isMobile ? "y" : false}
+              dragConstraints={{ top: 0 }}
+              dragElastic={{ top: 0, bottom: 0.2 }}
+              onDragEnd={(_, { offset, velocity }) => {
+                if (offset.y > 100 || velocity.y > 500) {
+                  setIsModalOpen(false);
+                }
+              }}
               initial={isMobile ? { y: "100%" } : { scale: 0.95, opacity: 0 }} 
               animate={isMobile ? { y: 0 } : { scale: 1, opacity: 1 }} 
               exit={isMobile ? { y: "100%" } : { scale: 0.95, opacity: 0 }} 
               transition={{ type: "spring", damping: 25, stiffness: 300 }}
-              className="bg-brand-card w-full max-w-4xl rounded-t-3xl md:rounded-3xl border border-white/10 overflow-hidden shadow-2xl flex flex-col md:flex-row h-[85vh] md:h-[600px]"
+              className="bg-brand-card w-full max-w-4xl rounded-t-3xl md:rounded-3xl border border-white/10 overflow-hidden shadow-2xl flex flex-col md:flex-row h-[85vh] md:h-[600px] relative"
               onClick={e => e.stopPropagation()}
             >
+                 {/* Mobile Drag Handle */}
+                 {isMobile && (
+                   <div className="w-full h-6 absolute top-0 left-0 z-30 flex items-center justify-center bg-gradient-to-b from-black/50 to-transparent pointer-events-none">
+                     <div className="w-12 h-1.5 bg-white/30 rounded-full" />
+                   </div>
+                 )}
                  {/* Product Image Side */}
                  <div className="md:w-5/12 relative bg-neutral-900 h-32 md:h-auto shrink-0">
                     <img 
