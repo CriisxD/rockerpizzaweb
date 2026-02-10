@@ -91,7 +91,7 @@ export const Cart: React.FC<CartProps> = ({
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[100]"
+            className="fixed inset-0 bg-black/60 backdrop-blur-sm z-[100] touch-none"
           />
           
           <motion.div
@@ -200,19 +200,19 @@ export const Cart: React.FC<CartProps> = ({
                     <input
                         type="text"
                         placeholder="Tu Nombre"
-                        className="w-full bg-black/30 border border-white/10 rounded-lg p-3 text-sm focus:border-brand-red focus:ring-1 focus:ring-brand-red outline-none transition-colors"
+                        className="w-full bg-black/30 border border-white/10 rounded-lg p-3 text-base focus:border-brand-red focus:ring-1 focus:ring-brand-red outline-none transition-colors"
                         value={deliveryInfo.name}
                         onChange={(e) => setDeliveryInfo({...deliveryInfo, name: e.target.value})}
                     />
                     <input
                         type="text"
                         placeholder="Dirección (O dejar en blanco si retiras)"
-                        className="w-full bg-black/30 border border-white/10 rounded-lg p-3 text-sm focus:border-brand-red focus:ring-1 focus:ring-brand-red outline-none transition-colors"
+                        className="w-full bg-black/30 border border-white/10 rounded-lg p-3 text-base focus:border-brand-red focus:ring-1 focus:ring-brand-red outline-none transition-colors"
                         value={deliveryInfo.address}
                         onChange={(e) => setDeliveryInfo({...deliveryInfo, address: e.target.value})}
                     />
                     <select
-                        className="w-full bg-black/30 border border-white/10 rounded-lg p-3 text-sm focus:border-brand-red outline-none transition-colors appearance-none"
+                        className="w-full bg-black/30 border border-white/10 rounded-lg p-3 text-base focus:border-brand-red outline-none transition-colors appearance-none"
                         value={deliveryInfo.paymentMethod}
                         onChange={(e) => setDeliveryInfo({...deliveryInfo, paymentMethod: e.target.value})}
                     >
@@ -222,7 +222,7 @@ export const Cart: React.FC<CartProps> = ({
                     </select>
                     <textarea
                         placeholder="Notas adicionales (sin cebollín, etc.)"
-                        className="w-full bg-black/30 border border-white/10 rounded-lg p-3 text-sm focus:border-brand-red focus:ring-1 focus:ring-brand-red outline-none transition-colors h-20 resize-none"
+                        className="w-full bg-black/30 border border-white/10 rounded-lg p-3 text-base focus:border-brand-red focus:ring-1 focus:ring-brand-red outline-none transition-colors h-20 resize-none"
                         value={deliveryInfo.notes}
                         onChange={(e) => setDeliveryInfo({...deliveryInfo, notes: e.target.value})}
                     />

@@ -150,7 +150,7 @@ export const MenuSection: React.FC<{ addToCart: (p: Product) => void }> = ({ add
             initial={{ opacity: 0 }} 
             animate={{ opacity: 1 }} 
             exit={{ opacity: 0 }} 
-            className="fixed inset-0 z-50 flex items-end md:items-center justify-center sm:p-4 bg-black/90 backdrop-blur-sm"
+            className="fixed inset-0 z-50 flex items-end md:items-center justify-center sm:p-4 bg-black/90 backdrop-blur-sm touch-none"
             onClick={() => setIsModalOpen(false)}
           >
             <motion.div 
@@ -246,7 +246,7 @@ export const MenuSection: React.FC<{ addToCart: (p: Product) => void }> = ({ add
                                     placeholder="Buscar ingredientes..."
                                     value={searchTerm}
                                     onChange={(e) => setSearchTerm(e.target.value)}
-                                    className="w-full bg-[#252525] border border-white/10 rounded-xl py-3 pl-10 pr-4 text-white placeholder-gray-500 focus:outline-none focus:border-brand-yellow transition-all shadow-inner"
+                                    className="w-full bg-[#252525] border border-white/10 rounded-xl py-3 pl-10 pr-4 text-base text-white placeholder-gray-500 focus:outline-none focus:border-brand-yellow transition-all shadow-inner"
                                 />
                             </div>
                         {selectedProduct.ingredientOptions?.filter(opt => opt.toLowerCase().includes(searchTerm.toLowerCase())).map((option, idx) => {
