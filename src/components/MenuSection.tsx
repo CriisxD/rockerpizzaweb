@@ -197,7 +197,7 @@ export const MenuSection: React.FC<{ addToCart: (p: Product) => void }> = ({ add
                    </div>
                  )}
                  {/* Product Image Side */}
-                 <div className="md:w-5/12 relative bg-neutral-900 h-32 md:h-auto shrink-0">
+                 <div className={`md:w-5/12 relative bg-neutral-900 md:h-auto shrink-0 ${isMobile && (selectedProduct.pizzaCount || 1) > 1 ? 'hidden' : 'h-32'}`}>
                     <img 
                         src={selectedProduct.image || defaultPizzaImage} 
                         alt={selectedProduct.name} 
